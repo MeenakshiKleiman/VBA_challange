@@ -1,0 +1,273 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;\f2\fnil\fcharset0 LucidaGrande;
+}
+{\colortbl;\red255\green255\blue255;\red32\green32\blue32;\red32\green32\blue32;\red255\green255\blue255;
+}
+{\*\expandedcolortbl;;\cssrgb\c16863\c16863\c16863;\cssrgb\c16863\c16863\c16863;\cssrgb\c100000\c100000\c100000\c80000;
+}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid101\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid201\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{square\}}{\leveltext\leveltemplateid301\'01\uc0\u9642 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid4}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}}
+\margl1440\margr1440\vieww24680\viewh15960\viewkind0
+\deftab720
+\pard\pardeftab720\partightenfactor0
+
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Create a script that loops through all the stocks for one year and outputs the following information:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0\cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 The ticker symbol\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Yearly change from the opening price at the beginning of a given year to the closing price at the end of that year.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 The percentage change from the opening price at the beginning of a given year to the closing price at the end of that year.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 The total stock volume of the stock. The result should match the following image\
+\pard\tx720\pardeftab720\partightenfactor0
+\cf2 \
+\
+
+\f1\b\fs36 Implementation
+\f0\b0\fs24 \
+___________________________________________________________________________________________________________\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 Sub Stock_data_analysis()\
+\
+    Dim Ticker As String\
+    Dim Total As Double\
+    Dim percentchange As Double\
+    Dim i As Long\
+    Dim j As Integer\
+    Dim PreviousStockPrice As Long\
+    Dim open_price As Double\
+    Dim close_price As Double\
+    Dim yearlychange As Double\
+    \
+   'For looping through each worksheet\
+   \
+    Dim ws As Worksheet\
+    \
+    For Each ws In Worksheets\
+    \
+    \
+    ' Summary Table column title\
+    \
+    ws.Range("I1").Value = "Ticker"\
+    ws.Range("J1").Value = "Yearly Change"\
+    ws.Range("K1").Value = "Percent Change"\
+    ws.Range("L1").Value = "Total Stock Volume"\
+    ws.Range("P2").Value = "Greatest % Increase"\
+    ws.Range("P3").Value = "Greatest % Decrease"\
+    ws.Range("P4").Value = "Greatest Total Volume"\
+    \
+    \
+    \'a1 = 0\
+    Total = 0\
+    Start = 2\
+    PreviousStockPrice = 2\
+\
+    \
+    'Row Count\
+    \
+    RowCount = ws.Cells(Rows.Count, "A").End(xlUp).Row\
+    \
+     For i = 2 To RowCount\
+    \
+       'FInd tsv\
+       \
+         Total = Total + ws.Cells(i, 7).Value\
+       \
+       \
+            If ws.Cells(i + 1, 1).Value <> ws.Cells(i, 1).Value Then\
+    \
+                  Ticker = ws.Cells(i, 1).Value\
+                \
+                \
+                     ws.Range("I" & Start).Value = Ticker\
+               \
+                     ws.Range("L" & Start).Value = Total\
+                \
+\
+                Total = 0\
+                \
+                open_price = ws.Range("C" & PreviousStockPrice)\
+                \
+                close_price = ws.Range("F" & i)\
+                \
+                yearlychange = close_price - open_price\
+                \
+                ws.Range("J" & Start).Value = yearlychange\
+                \
+               \
+          \
+            'Percentage Change\
+                \
+            If open_price = 0 Then\
+                \
+                percentchange = 0\
+                \
+            Else\
+                open_price = ws.Range("C" & PreviousStockPrice)\
+              \
+                percentchange = yearlychange / open_price\
+                \
+            End If\
+            \
+            ws.Range("K" & Start).Value = percentchange\
+            \
+            ws.Range("K" & Start).NumberFormat = "0.00%"\
+\
+\pard\tx720\pardeftab720\partightenfactor0
+\cf3 \expnd0\expndtw0\kerning0
+___________________________________________________________________________________________________________\cf2 \outl0\strokewidth0 \strokec2 \
+\pard\tx720\pardeftab720\partightenfactor0
+\cf2 \
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls2\ilvl0
+\fs40 \cf2 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 {\listtext	
+\f2 \uc0\u9642 
+\f0 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Make sure to use conditional formatting that will highlight positive change in green and negative change in red.\
+\pard\tx720\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\
+\pard\tx720\pardeftab720\partightenfactor0
+\cf0 \
+\pard\tx720\pardeftab720\partightenfactor0
+\cf3 \expnd0\expndtw0\kerning0
+___________________________________________________________________________________________________________
+\fs40 \cf2 \outl0\strokewidth0 \strokec2 \
+\pard\tx720\pardeftab720\partightenfactor0
+
+\fs24 \cf2 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0        \
+            ' colors format change\
+                \
+               \
+            If ws.Range("J" & Start).Value >= 0 Then\
+                        ws.Range("j" & Start).Interior.ColorIndex = 4\
+            Else\
+                        ws.Range("j" & Start).Interior.ColorIndex = 3\
+                    \
+            End If\
+                'start of the next stock ticker\
+                Start = Start + 1\
+                \
+                PreviousStockPrice = i + 1\
+                \
+                \
+                \
+            End If\
+            \
+            Next i\
+\
+\
+\pard\tx720\pardeftab720\partightenfactor0
+\cf3 \expnd0\expndtw0\kerning0
+___________________________________________________________________________________________________________
+\fs40 \cf3 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls3\ilvl0
+\fs40 \cf2 \cb4 {\listtext	
+\f2 \uc0\u9642 
+\f0 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Add functionality to your script to return the stock with the "Greatest % increase", "Greatest % decrease", and "Greatest total volume". The solution should match the following image:\
+\pard\tx720\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\pardeftab720\partightenfactor0
+\cf3 \expnd0\expndtw0\kerning0
+___________________________________________________________________________________________________________
+\fs40 \cf3 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\fs24 \cf0 \kerning1\expnd0\expndtw0 \
+\
+ 'loop for Greatest % Increase, Greatest % Decrease, and Greatest Total Volume\
+\
+            greatest_increase = 0\
+            greatest_decrease = 0\
+            gtv = 0\
+             \
+            'Set value of the last row for column K\
+            RowCount = ws.Cells(Rows.Count, "K").End(xlUp).Row\
+            \
+            For i = 2 To RowCount\
+            \
+            'First determine the Greatest Total Volume\
+            If ws.Range("L" & i).Value > gtv Then\
+               gtv = ws.Range("L" & i).Value\
+               ws.Range("R4").Value = gtv\
+               ws.Range("Q4").Value = ws.Range("I" & i).Value\
+               \
+            End If\
+            \
+            'Next determine Greatest % Increase\
+            If ws.Range("K" & i).Value > greatest_increase Then\
+                greatest_increase = ws.Range("K" & i).Value\
+                ws.Range("R2").Value = greatest_increase\
+                ws.Range("Q2").Value = ws.Range("I" & i).Value\
+                \
+            End If\
+            \
+            'Greatest % Decrease\
+            If ws.Range("K" & i).Value < greatest_decrease Then\
+                greatest_decrease = ws.Range("K" & i).Value\
+                ws.Range("R3").Value = greatest_decrease\
+                ws.Range("Q3").Value = ws.Range("I" & i).Value\
+                \
+            End If\
+            \
+            'Change format to "%"\
+            ws.Range("P2").NumberFormat = "0.00%"\
+            \
+            ws.Range("P3").NumberFormat = "0.00%"\
+    \
+        Next i\
+\
+\
+\pard\tx720\pardeftab720\partightenfactor0
+\cf3 \expnd0\expndtw0\kerning0
+___________________________________________________________________________________________________________\
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls4\ilvl0
+\fs40 \cf2 \kerning1\expnd0\expndtw0 {\listtext	
+\f2 \uc0\u9642 
+\f0 	}\expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 Make the appropriate adjustments to your VBA script to enable it to run on every worksheet (that is, every year) at once.\
+\pard\tx720\pardeftab720\partightenfactor0
+
+\fs24 \cf0 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+\pard\tx720\pardeftab720\partightenfactor0
+\cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+\pard\tx720\pardeftab720\partightenfactor0
+\cf3 \expnd0\expndtw0\kerning0
+___________________________________________________________________________________________________________\
+\
+\
+		Next ws\
+\
+\
+	End Sub\
+\
+\
+\
+\
+\
+\
+}
